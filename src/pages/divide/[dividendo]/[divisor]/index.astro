@@ -35,9 +35,9 @@ const { dividendo, divisor, decimales } = Astro.params;
                 </p>
 
                 <Division
-                    dividendo={dividendo}
-                    divisor={divisor}
-                    decimales={decimales}
+                    dividendo={Number(dividendo)}
+                    divisor={Number(divisor)}
+                    decimales={Number(decimales)}
                 />
                 <a href="/" class="back-button">
                     <button type="button">Volver al Inicio</button>
