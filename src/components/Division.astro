@@ -1,0 +1,120 @@
+---
+import { divide, type TResta } from "../lib/division";
+
+interface Props {
+	dividendo: number;
+	divisor: number;
+	decimales: number;
+}
+
+const { dividendo, divisor, decimales = 0 } = Astro.props;
+const division = divide(dividendo, divisor, decimales);
+---
+
+<table cellspacing="0">
+	<tr>
+		<td rowspan="2">-</td>
+		{
+			division.fraccion.numerador.toString()
+				.toString()
+				.split("")
+				.map((num: string) => <td style="color: darkred;">{num}</td>)
+		}
+		<td></td>
+		{
+			division.fraccion.denominador.toString()
+				.toString()
+				.split("")
+				.map((num: string, index: number) => (
+					<td
+						style={`padding:1px;${index === 0 ? "BORDER-left: 2px solid black;" : ""}BORDER-bottom: 2px solid black; color:darkblue`}
+					>
+						{num}
+					</td>
+				))
+		}
+	</tr>
+	<tr>
+		{
+			division.restas[0].sustraendo
+				.padStart(division.restas[0].minuendo.length, " ")
+				.padEnd(dividendo.toString().length, " ")
+				.split("")
+				.map((num: string, index: number) => (
+					<td
+						style={`${index < division.restas[0].minuendo.length ? "BORDER-bottom: 2px solid #000000;" : ""}`}
+					>
+						{num}
+					</td>
+				))
+		}
+		<td></td>
+		{
+			division.cociente
+				.toString()
+				.split("")
+				.map((num: string) => (
+					<td style="padding:1px;BORDER-top: 2px solid black; color: darkgreen">
+						{num}
+					</td>
+				))
+		}
+	</tr>
+	{
+		division.restas.map((data: TResta, index: number) =>
+			index === 0 ? null : (
+				<tr>
+					<td
+						colspan={index + 1}
+						rowspan={2}
+						style="text-align: right;"
+					>
+						-
+					</td>
+					{data.minuendo.split("").map((num: string) => (
+						<td>{num}</td>
+					))}
+				</tr>
+				<tr>
+					{data.sustraendo
+						.padStart(data.minuendo.length, " ")
+						.split("")
+						.map((num: string) => (
+							<td style="BORDER-bottom: 2px solid #000000">
+								{num}
+							</td>
+						))}
+				</tr>
+			),
+		)
+	}
+	<tr>
+		<td colspan={division.restas.length}></td>
+		<td
+			>{
+				division.restas[division.restas.length - 1].resta
+					.padStart(
+						division.restas[division.restas.length - 1].minuendo.length-1,
+						" ",
+					)
+					.split("")
+					.map((num: string) => <td>{num}</td>)
+			}</td
+		>
+	</tr>
+</table>
+
+<style>
+	table {
+		font-size: 32px;
+		font-weight: 500;
+		border: 0px solid white;
+		border-collapse: collapse;
+	}
+	td {
+		border: 0px solid lightblue;
+		padding: 1px;
+		margin: 1px;
+		text-align: center;
+	}
+</style>
