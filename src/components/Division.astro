@@ -1,28 +1,28 @@
 ---
-import { divide, type TResta } from "../lib/division";
+import { division, type TOperacion } from "../lib/division_v3";
 
 interface Props {
-	dividendo: number;
-	divisor: number;
-	decimales: number;
+	dividendo: string;
+	divisor: string;
+	decimales: string;
 }
 
-const { dividendo, divisor, decimales = 0 } = Astro.props;
-const division = divide(dividendo, divisor, decimales);
+const { dividendo, divisor, decimales } = Astro.props;
+const divi = division(dividendo, divisor, decimales);
 ---
-
+<p>{JSON.stringify(divi)}</p>
 <table cellspacing="0">
 	<tr>
 		<td rowspan="2">-</td>
 		{
-			division.fraccion.numerador.toString()
+			divi.fraccion.numerador.toString()
 				.toString()
 				.split("")
 				.map((num: string) => <td style="color: darkred;">{num}</td>)
 		}
 		<td></td>
 		{
-			division.fraccion.denominador.toString()
+			divi.fraccion.denominador.toString()
 				.toString()
 				.split("")
 				.map((num: string, index: number) => (
@@ -36,13 +36,13 @@ const division = divide(dividendo, divisor, decimales);
 	</tr>
 	<tr>
 		{
-			division.restas[0].sustraendo
-				.padStart(division.restas[0].minuendo.length, " ")
+			divi.operaciones[0].sustraendo
+				.padStart(divi.operaciones[0].minuendo.length, " ")
 				.padEnd(dividendo.toString().length, " ")
 				.split("")
 				.map((num: string, index: number) => (
 					<td
-						style={`${index < division.restas[0].minuendo.length ? "BORDER-bottom: 2px solid #000000;" : ""}`}
+						style={`${index < divi.operaciones[0].minuendo.length ? "BORDER-bottom: 2px solid #000000;" : ""}`}
 					>
 						{num}
 					</td>
@@ -50,7 +50,7 @@ const division = divide(dividendo, divisor, decimales);
 		}
 		<td></td>
 		{
-			division.cociente
+			divi.cociente
 				.toString()
 				.split("")
 				.map((num: string) => (
@@ -61,11 +61,11 @@ const division = divide(dividendo, divisor, decimales);
 		}
 	</tr>
 	{
-		division.restas.map((data: TResta, index: number) =>
+		divi.operaciones.map((data: TOperacion, index: number) =>
 			index === 0 ? null : (
 				<tr>
 					<td
-						colspan={index + 1}
+						colspan={data.colspan}
 						rowspan={2}
 						style="text-align: right;"
 					>
@@ -89,14 +89,14 @@ const division = divide(dividendo, divisor, decimales);
 		)
 	}
 	<tr>
-		<td colspan={division.restas.length}></td>
+		{
+			divi.operaciones[divi.operaciones.length-1].colspan == 0
+			?<></>
+			:<td colspan={divi.operaciones[divi.operaciones.length-1].colspan}></td>
+		}
 		<td
 			>{
-				division.restas[division.restas.length - 1].resta
-					.padStart(
-						division.restas[division.restas.length - 1].minuendo.length-1,
-						" ",
-					)
+				divi.operaciones[divi.operaciones.length - 1].resta
 					.split("")
 					.map((num: string) => <td>{num}</td>)
 			}</td
@@ -112,7 +112,7 @@ const division = divide(dividendo, divisor, decimales);
 		border-collapse: collapse;
 	}
 	td {
-		border: 0px solid lightblue;
+		border: 1px solid lightblue;
 		padding: 1px;
 		margin: 1px;
 		text-align: center;
