@@ -1,5 +1,6 @@
 ---
 import Division from "../../../../components/Division.astro";
+import { sePuedeDividir } from "../../../../lib/division_v3";
 
 const { dividendo, divisor } = Astro.params;
 const decimales: string = "0";
@@ -15,35 +16,28 @@ const decimales: string = "0";
     <body>
         <br />
         <div class="container">
-            <h1>Calculadora de Divisiones</h1>
+            <div class="container">
+                <h1>Calculadora de Divisiones</h1>
 
-            <div id="result" class="result">
-                <!-- Aquí se mostrarán los resultados -->
+                <div id="result" class="result">
+                    {
+                        sePuedeDividir(dividendo, divisor) ? (
+                            <Division
+                                dividendo={dividendo}
+                                divisor={divisor}
+                                decimales={decimales}
+                            />
+                        ) : (
+                            <h1>Error Tipo M.E.MS.</h1>
+                        )
+                    }
+                </div>
                 <p>
-                    <strong
-                        >Dividendo: <span style="color: darkred;"
-                            >{dividendo}</span
-                        ></strong
+                    <center
+                        >Creado por: <b>Luis Antonio Nolasco Gómez</b></center
                     >
                 </p>
-                <p>
-                    <strong
-                        >Divisor: <span style="color: darkblue;">{divisor}</span
-                        ></strong
-                    >
-                </p>
-                <p>
-                    <strong>Decimales: {decimales}</strong>
-                </p>
-
-                <Division
-                    dividendo={dividendo}
-                    divisor={divisor}
-                    decimales={decimales}
-                />
-                <a href="/" class="back-button">
-                    <button type="button">Volver al Inicio</button>
-                </a>
+                <p><center>Todos Los derechos reservados</center></p>
             </div>
         </div>
     </body>

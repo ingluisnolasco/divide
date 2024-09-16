@@ -1,4 +1,4 @@
-import { bignumber, subtract, multiply, divide, format } from 'mathjs';
+import { bignumber, subtract, multiply, divide, format, type BigNumber } from 'mathjs';
 
 export interface TOperacion {
     factor: string;
@@ -80,4 +80,16 @@ export function division(dividendo: string, divisor: string, decimales: string):
     const fraccion: TFraccionEquivalente = fraccionEquivalente(dividendo, divisor);
     const operaciones: TOperacion[] = restasSucesivas(fraccion.numerador, fraccion.denominador, cociente.toString());
     return { dividendo, divisor, cociente: cociente.toString(), fraccion, operaciones }
+}
+
+export function sePuedeDividir(dividendo: string, divisor: string): boolean {
+    try {
+        const num1: BigNumber = bignumber(dividendo);
+        const num2: BigNumber = bignumber(divisor);
+        return true;
+    }
+    catch (error) {
+        return false;
+
+    }
 }

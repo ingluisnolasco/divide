@@ -1,5 +1,6 @@
 ---
 import Division from "../../../../../components/Division.astro";
+import { sePuedeDividir } from "../../../../../lib/division_v3";
 
 const { dividendo, divisor, decimales } = Astro.params;
 ---
@@ -17,33 +18,22 @@ const { dividendo, divisor, decimales } = Astro.params;
             <h1>Calculadora de Divisiones</h1>
 
             <div id="result" class="result">
-                <!-- Aquí se mostrarán los resultados -->
-                <p>
-                    <strong
-                        >Dividendo: <span style="color: darkred;"
-                            >{dividendo}</span
-                        ></strong
-                    >
-                </p>
-                <p>
-                    <strong
-                        >Divisor: <span style="color: darkblue;">{divisor}</span
-                        ></strong
-                    >
-                </p>
-                <p>
-                    <strong>Decimales: {decimales}</strong>
-                </p>
-
-                <Division
-                    dividendo={dividendo}
-                    divisor={divisor}
-                    decimales={decimales}
-                />
-                <a href="/" class="back-button">
-                    <button type="button">Volver al Inicio</button>
-                </a>
+                {
+                    sePuedeDividir(dividendo, divisor) ? (
+                        <Division
+                            dividendo={dividendo}
+                            divisor={divisor}
+                            decimales={decimales}
+                        />
+                    ) : (
+                        <h1>Error Tipo M.E.MS.</h1>
+                    )
+                }
             </div>
+            <p>
+                <center>Creado por: <b>Luis Antonio Nolasco Gómez</b></center>
+            </p>
+            <p><center>Todos Los derechos reservados</center></p>
         </div>
     </body>
 
@@ -53,7 +43,7 @@ const { dividendo, divisor, decimales } = Astro.params;
             display: flex;
             justify-content: center;
             align-items: top;
-            margin: 0;
+            margin: 0px;
             background-color: #f4f4f4;
             overflow: auto; /* Permite el scroll en el body */
         }
