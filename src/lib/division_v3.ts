@@ -49,7 +49,7 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
             if (parseInt(divisor) < parseInt(dividendo)) { ancho = divisor.length }
             else { ancho = dividendo.length }
             minuendo = cola.substring(0, ancho);
-            while (minuendo < sustraendo) {
+            while (parseInt(minuendo) < parseInt(sustraendo)) {
                 minuendo = minuendo + cola.substring(ancho, ancho + 1)
                 ancho += 1;
             }
