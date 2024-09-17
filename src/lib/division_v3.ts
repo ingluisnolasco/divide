@@ -68,7 +68,7 @@ export function division(dividendo: string, divisor: string, decimales: string):
 
     if (decimales === "0") {
         cociente = (format(divide(bignumber(dividendo), bignumber(divisor)),
-            { notation: 'fixed', precision: 1 })).slice(0, -1);
+            { notation: 'fixed', precision: 1 })).slice(0, -2);
 
     }
     else {
