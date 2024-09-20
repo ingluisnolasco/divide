@@ -1,26 +1,21 @@
 ---
-import Layout from "../../../../../layouts/Layout.astro";
+import Layout_Division from "../../../../../layouts/Layout_Division.astro";
 import Division from "../../../../../components/Division.astro";
 import { sePuedeDividir } from "../../../../../lib/division_v3";
 
 const { dividendo, divisor, decimales } = Astro.params;
 ---
 
-<Layout title="Calculadora de Divisiones">
-    <center>
-        <h1>Calculadora de Divisiones</h1>
-        {
-            sePuedeDividir(dividendo, divisor) ? (
-                <Division
-                    dividendo={dividendo}
-                    divisor={divisor}
-                    decimales={decimales}
-                />
-            ) : (
-                <h1>Error Tipo M.E.MS.</h1>
-            )
-        }
-        <p>Creado por: <b>Luis Antonio Nolasco Gómez</b></p>
-        <p>Todos Los derechos reservados</p>
-    </center>
-</Layout>
+<Layout_Division title="Calculadora de Divisiones">
+    {
+        sePuedeDividir(dividendo, divisor) ? (
+            <Division
+                dividendo={dividendo}
+                divisor={divisor}
+                decimales={decimales}
+            />
+        ) : (
+            <h1>Error Tipo M.E.MS.</h1>
+        )
+    }
+</Layout_Division>
