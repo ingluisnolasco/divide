@@ -40,7 +40,7 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
     let minuendo: string = "0";
     let sustraendo: string = "0";
     let resta: string = "0";
-    let colspan: number = 0;
+    let colspan: number = 1;
     let ancho: number = 0;
 
     cociente.replace(".", "").split("").map((factor: string, index: number) => {
@@ -57,8 +57,8 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
         }
         else { minuendo = lista[index - 1].resta + cola.substring(ancho + index - 1, ancho + index) }
         resta = subtract(bignumber(minuendo), bignumber(sustraendo)).toString();
-        colspan += minuendo.length - resta.length;
         lista.push({ factor, minuendo, sustraendo, resta, colspan });
+        colspan += minuendo.length - resta.length;
     })
     return lista;
 }

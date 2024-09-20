@@ -13,27 +13,26 @@ const { dividendo, divisor, decimales } = Astro.params;
         <title>Calculadora de Divisiones</title>
     </head>
     <body>
-        <br />
-        <div class="container">
-            <h1><center>Calculadora de Divisiones</center></h1>
+        <center>
+            <div class="container">
+                <h1>Calculadora de Divisiones</h1>
 
-            <div id="result" class="result">
-                {
-                    sePuedeDividir(dividendo, divisor) ? (
-                        <Division
-                            dividendo={dividendo}
-                            divisor={divisor}
-                            decimales={decimales}
-                        />
-                    ) : (
-                        <h1>Error Tipo M.E.MS.</h1>
-                    )
-                }
+                <div id="result" class="result">
+                    {
+                        sePuedeDividir(dividendo, divisor) ? (
+                            <Division
+                                dividendo={dividendo}
+                                divisor={divisor}
+                                decimales={decimales}
+                            />
+                        ) : (
+                            <h1>Error Tipo M.E.MS.</h1>
+                        )
+                    }
+                </div>
+                <p>Creado por: <b>Luis Antonio Nolasco Gómez</b></p>
+                <p>Todos Los derechos reservados</p>
             </div>
-            <p>
-                <center>Creado por: <b>Luis Antonio Nolasco Gómez</b></center>
-            </p>
-            <p><center>Todos Los derechos reservados</center></p>
-        </div>
+        </center>
     </body>
 </html>

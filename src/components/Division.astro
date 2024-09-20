@@ -67,9 +67,7 @@ const divi = division(dividendo, divisor, decimales);
 						colspan={data.colspan}
 						rowspan={2}
 						style="text-align: right;"
-					>
-						{data.colspan}
-					</td>
+					>-</td>
 					{data.minuendo.split("").map((num: string) => (
 						<td>{num}</td>
 					))}
@@ -110,7 +108,7 @@ const divi = division(dividendo, divisor, decimales);
 		border-collapse: collapse;
 	}
 	td {
-		border: 1px solid lightblue;
+		border: 0px solid lightblue;
 		padding: 1px;
 		margin: 1px;
 		text-align: center;
