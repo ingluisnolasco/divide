@@ -3,13 +3,18 @@ import Layout_Division from "../../../../layouts/Layout_Division.astro";
 import Division from "../../../../components/Division.astro";
 import { sePuedeDividir } from "../../../../lib/division_v3";
 
+interface Props {
+    dividendo: string;
+    divisor: string;
+}
+
 const { dividendo, divisor } = Astro.params;
 const decimales: string = "0";
 ---
 
 <Layout_Division title="Calculadora de Divisiones">
     {
-        sePuedeDividir(dividendo, divisor) ? (
+        sePuedeDividir(dividendo, divisor, decimales) ? (
             <Division
                 dividendo={dividendo}
                 divisor={divisor}

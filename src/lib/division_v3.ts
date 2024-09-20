@@ -1,4 +1,4 @@
-import { bignumber, subtract, multiply, divide, format, type BigNumber } from 'mathjs';
+import { bignumber, subtract, multiply, divide, format } from 'mathjs';
 
 export interface TOperacion {
     factor: string;
@@ -28,6 +28,7 @@ function fraccionEquivalente(dividendo: string, divisor: string): TFraccionEquiv
     const factor: number = Math.max(ofactor(dividendo), ofactor(divisor));
     const numerador: string = multiply(bignumber(dividendo), bignumber(factor)).toString();
     const denominador: string = multiply(bignumber(divisor), bignumber(factor)).toString();
+
     return {
         numerador,
         denominador,
@@ -54,7 +55,6 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
                 minuendo = minuendo + cola.substring(ancho, ancho + 1)
                 ancho += 1;
             }
-
         }
         else { minuendo = lista[index - 1].resta + cola.substring(ancho + index - 1, ancho + index) }
         resta = subtract(bignumber(minuendo), bignumber(sustraendo)).toString();
@@ -66,33 +66,28 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
 
 export function division(dividendo: string, divisor: string, decimales: string): TDivision {
     let cociente: string;
-
-    if (decimales === "0") {
+    if (decimales === '0') {
         cociente = (format(divide(bignumber(dividendo), bignumber(divisor)),
-            { notation: 'fixed', precision: 1 })).slice(0, -2);
+            { notation: 'fixed', precision: 0 })).slice(0, -2);
 
     }
     else {
         cociente = (format(divide(bignumber(dividendo), bignumber(divisor)),
-            { notation: 'fixed', precision: (parseInt(decimales, 10) + 1) })).slice(0, -1);
+            { notation: 'fixed', precision: parseInt(decimales, 10) + 1 })).slice(0, -1);
 
     }
-
     const fraccion: TFraccionEquivalente = fraccionEquivalente(dividendo, divisor);
-    const operaciones: TOperacion[] = restasSucesivas(fraccion.numerador, fraccion.denominador, cociente.toString());
+    const operaciones: TOperacion[] = restasSucesivas(fraccion.numerador, fraccion.denominador, cociente);
     const operacion: TOperacion = operaciones[operaciones.length - 1];
     const colspan: number = operacion.colspan + operacion.minuendo.length - operacion.resta.length - 1;
     return { dividendo, divisor, cociente: cociente.toString(), colspan, fraccion, operaciones }
 }
 
-export function sePuedeDividir(dividendo: string, divisor: string): boolean {
-    try {
-        const num1: BigNumber = bignumber(dividendo);
-        const num2: BigNumber = bignumber(divisor);
-        return true;
-    }
-    catch (error) {
-        return false;
+export function sePuedeDividir(dividendo: string, divisor: string, decimales: string): boolean {
+    if (isNaN(parseInt(decimales, 10))) { return false; }
+    if (isNaN(parseInt(dividendo, 10))) { return false; }
+    if (isNaN(parseInt(divisor, 10))) { return false; }
+    else { if (parseInt(divisor, 10) === 0) { return false; } }
 
-    }
+    return true;
 }
