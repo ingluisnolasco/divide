@@ -18,6 +18,7 @@ export interface TDivision {
     dividendo: string;
     divisor: string;
     cociente: string;
+    colspan: number;
     fraccion: TFraccionEquivalente;
     operaciones: TOperacion[];
 }
@@ -79,7 +80,9 @@ export function division(dividendo: string, divisor: string, decimales: string):
 
     const fraccion: TFraccionEquivalente = fraccionEquivalente(dividendo, divisor);
     const operaciones: TOperacion[] = restasSucesivas(fraccion.numerador, fraccion.denominador, cociente.toString());
-    return { dividendo, divisor, cociente: cociente.toString(), fraccion, operaciones }
+    const operacion: TOperacion = operaciones[operaciones.length - 1];
+    const colspan: number = operacion.colspan + operacion.minuendo.length - operacion.resta.length - 1;
+    return { dividendo, divisor, cociente: cociente.toString(), colspan, fraccion, operaciones }
 }
 
 export function sePuedeDividir(dividendo: string, divisor: string): boolean {

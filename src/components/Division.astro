@@ -19,7 +19,6 @@ const divi = division(dividendo, divisor, decimales);
 				.split("")
 				.map((num: string) => <td style="color: darkred;">{num}</td>)
 		}
-		<td></td>
 		{
 			divi.fraccion.denominador.toString()
 				.toString()
@@ -47,7 +46,6 @@ const divi = division(dividendo, divisor, decimales);
 					</td>
 				))
 		}
-		<td></td>
 		{
 			divi.cociente
 				.toString()
@@ -87,9 +85,9 @@ const divi = division(dividendo, divisor, decimales);
 	}
 	<tr>
 		{
-			divi.operaciones[divi.operaciones.length-1].colspan == 0
+			divi.colspan == 0
 			?<></>
-			:<td colspan={divi.operaciones[divi.operaciones.length-1].colspan}></td>
+			:<td colspan={divi.colspan}></td>
 		}
 		<td
 			>{
