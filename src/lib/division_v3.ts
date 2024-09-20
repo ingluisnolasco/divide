@@ -46,7 +46,7 @@ function restasSucesivas(dividendo: string, divisor: string, cociente: string): 
     cociente.replace(".", "").split("").map((factor: string, index: number) => {
         sustraendo = multiply(bignumber(divisor), bignumber(factor)).toString();
         if (index === 0) {
-            if (parseInt(divisor) < parseInt(dividendo)) { ancho = divisor.length }
+            if (parseInt(divisor) < parseInt(dividendo)) { ancho = 1 }
             else { ancho = dividendo.length }
             minuendo = cola.substring(0, ancho);
             while (parseInt(minuendo) < parseInt(sustraendo)) {
